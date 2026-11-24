@@ -627,3 +627,30 @@
       routineBanner.className = "routine-banner" + (round.mode === "night" ? " night" : "");
       routineTitle.textContent = round.title;
       routineSub.textCont
+function setupQuizListeners() {
+  document.querySelectorAll("#q1Options .opt-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#q1Options .opt-btn").forEach((b) => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      selectedType = btn.dataset.type;
+      startQuizBtn.disabled = !(selectedType && selectedGoal);
+    });
+  });
+
+  document.querySelectorAll("#q2Options .opt-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#q2Options .opt-btn").forEach((b) => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      selectedGoal = btn.dataset.goal;
+      startQuizBtn.disabled = !(selectedType && selectedGoal);
+    });
+  });
+
+  startQuizBtn.addEventListener("click", () => {
+    if (!selectedType || !selectedGoal) return;
+    roundIndex = 0;
+    score = 0;
+    renderRound();
+  });
+}
+      
